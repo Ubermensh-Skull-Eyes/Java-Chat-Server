@@ -4,10 +4,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
-import Server.ServerThread;
+
 
 
 
@@ -23,7 +23,6 @@ public class ChatServer{
     public static void main(String[] args) throws Exception {
         // Get the # 
         int port = Integer.parseInt(args[0]);
-
         //server object to accept more connections
         new ChatServer(port);
     }
@@ -42,6 +41,43 @@ public class ChatServer{
              outputStreams.put(newSocket,dout);
              //create a new thread for client and forget
              new ServerThread(this,newSocket);
+        }
+    }
+    // Get enumeration of all OutputStreams 
+    Enumeration getOutputStreams(){
+        return  outputStreams.elements();
+    }
+    //send message to all client 
+    void sendToAll(String message){
+        //we sunchronized because other thread might call
+        //removeConnection() this will mess up
+        synchronized(outputStreams){
+            for(Enumeration e = getOutputStreams(); e.hasMoreElements();){
+                //get output stream
+                DataOutputStream dout = (DataOutputStream)e.nextElement();
+                //and send the message
+                try{
+                    dout.writeUTF(message);
+                } catch(IOException ie){
+                    System.out.println(ie);
+                }
+            
+            }
+        }
+    }
+    // Remove a socket
+    void removeConnection(Socket s){
+        //synchronized to secure sendALL
+        synchronized(outputStreams){
+            System.out.println("Removing connection "+s);
+            //remove it from hashtable/list
+            outputStreams.remove(s);
+            try{
+                s.close();
+            } catch(IOException ie){
+                System.out.println("Error closing "+s);
+                ie.printStackTrace();
+            }
         }
     }
 }

@@ -1,14 +1,13 @@
 package Client;
-
+import java.awt.*;
+import java.awt.event.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import javax.swing.plaf.PanelUI;
-import javax.swing.plaf.metal.MetalBorders.TextFieldBorder;
 
-public class Client extends PanelUI implements Runnable{
+public class Client extends Panel implements Runnable{
     private TextField tf = new TextField();
     private TextArea ta = new TextArea();
 
@@ -41,7 +40,7 @@ public class Client extends PanelUI implements Runnable{
             din = new DataInputStream(socket.getInputStream());
             dout = new DataOutputStream(socket.getOutputStream());
             //start background thread
-            new Thread(this).run();
+            new Thread(this).start();
         }catch(IOException e){
             System.out.println(e);
         }
@@ -68,5 +67,19 @@ public class Client extends PanelUI implements Runnable{
         }catch(IOException e){
             System.out.println(e);
         }
+    }
+     public static void main(String[] args) {
+        String host = args.length > 0 ? args[0] : "localhost";
+        int port = args.length > 1 ? Integer.parseInt(args[1]) : 5000;
+
+        Frame f = new Frame("Chat Client");
+        f.add("Center", new Client(host, port));
+        f.setSize(400, 300);
+        f.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        f.setVisible(true);
     }
 }

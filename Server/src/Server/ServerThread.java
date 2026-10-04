@@ -17,15 +17,17 @@ public class ServerThread extends Thread {
     }
 
     //this will runs in a new thread
+    //constructor  
     public void run(){
-        // DataInputStream to read what client is sending through socket
         try{
+            // DataInputStream to read what client is sending through socket
             DataInputStream din = new DataInputStream(socket.getInputStream());
             while(true){
                 //read message
                 String message = din.readUTF();
                 System.out.println("Sending ..."+message);
                 // server send to all clients
+                server.sendToAll(message);
             }
         }        
         catch(EOFException e){
@@ -35,6 +37,7 @@ public class ServerThread extends Thread {
             e.printStackTrace();
         }finally{
             //remove dead connection
+            server.removeConnection(socket);
         }
     } 
 }
