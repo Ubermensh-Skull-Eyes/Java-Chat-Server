@@ -19,7 +19,7 @@ This is the basic structure of project.
 
 ```bash
 # Clone the repository
-git clone https://github.com/Ubermensh-Skull-Eyes/Java-Chat-Server/edit/ServerBE
+git clone https://github.com/Ubermensh-Skull-Eyes/Java-Chat-Server.git)
 ```
 
 # Open cmd and compile both the java packages together using the following command
