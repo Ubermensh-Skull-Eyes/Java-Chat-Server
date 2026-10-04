@@ -29,7 +29,7 @@ javac Server\*.java Client\Client.java
 ```
 # Run server first using
 ```bash
-java -cp ../bin Server.ChatServer 5000 [-any port]
+java -cp ../bin Server.ChatServer 5000
 ```
 #Open another terminal and run the following command to open client
 ```bash
