@@ -5,14 +5,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Hashtable;
 
 import Server.ServerThread;
 
 
 
 public class ChatServer{
-    //hash map to store dataoutput and socket to call if reued.
-    HashMap<Socket,DataOutputStream> outputStreams = new HashMap<>();
+    private ServerSocket ss;
+    //hashtable to store dataoutput and socket to call if reued.
+    private Hashtable outputStreams = new Hashtable<>();
     //Create a constructor to read port number from client to connect to the port
     public ChatServer(int portNumber) throws IOException{
         listen(portNumber);
@@ -27,7 +29,7 @@ public class ChatServer{
     }
     private void listen(int portNumber) throws IOException{
         //starts listening to a server
-        ServerSocket ss = new ServerSocket(portNumber);
+        ss = new ServerSocket(portNumber);
         System.out.println("Listening to the port :- "+ss);
         //accepting connections
         while(true){

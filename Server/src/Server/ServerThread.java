@@ -6,8 +6,8 @@ import java.net.Socket;
 
 public class ServerThread extends Thread {
     //contructor
-    ChatServer server;
-    Socket socket;
+    private ChatServer server;
+    private Socket socket;
     public ServerThread(ChatServer s, Socket newSocket){
         this.server = s;
         this.socket = newSocket;
