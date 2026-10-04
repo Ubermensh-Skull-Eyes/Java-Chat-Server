@@ -6,6 +6,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 
+import Server.ServerThread;
+
 
 
 public class ChatServer{
@@ -37,6 +39,7 @@ public class ChatServer{
              //save this stream so we don't need to create again
              outputStreams.put(newSocket,dout);
              //create a new thread for client and forget
+             new ServerThread(this,newSocket);
         }
     }
 }
