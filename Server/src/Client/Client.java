@@ -57,4 +57,16 @@ public class Client extends PanelUI implements Runnable{
             System.out.println(e);
         }
     }
+    public void run(){
+        try{
+            //receive message one by one
+            while(true){
+                String message = din.readUTF();
+                //print to next window
+                ta.append(message+'\n');
+            }
+        }catch(IOException e){
+            System.out.println(e);
+        }
+    }
 }
